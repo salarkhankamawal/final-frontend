@@ -5,6 +5,14 @@
     color-scheme: light;
   }
   body {
-    @apply bg-slate-50 text-slate-900;
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
+@media print {
+  nav,
+  aside,
+  header:not(.print-header) {
+    display: none !important;
   }
 }
