@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import * as flightsApi from "../../api/flights.api";
+import { extractFlightOffers } from "../../utils/flights";
 import { getApiErrorMessage } from "../../api/client";
 import { MetaTags } from "../../Components/shared/MetaTags";
 import { FlightSearchForm } from "../../Components/shared/FlightSearchForm";
@@ -42,7 +43,7 @@ export default function AdminFlightSearchPage() {
     );
   };
 
-  const offers = Array.isArray(data) ? data : data?.offers ?? [];
+  const offers = extractFlightOffers(data);
 
   return (
     <>

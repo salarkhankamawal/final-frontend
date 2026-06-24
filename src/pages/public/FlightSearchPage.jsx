@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import * as flightsApi from "../../api/flights.api";
+import { extractFlightOffers, extractFlightSuggestions } from "../../utils/flights";
 import { getApiErrorMessage } from "../../api/client";
 import { MetaTags } from "../../Components/shared/MetaTags";
 import { FlightSearchForm } from "../../Components/shared/FlightSearchForm";
@@ -46,7 +47,11 @@ export default function FlightSearchPage() {
         destinationAirportCode: queryParams.destinationAirportCode,
         departureDate: queryParams.departureDate,
       }),
-    enabled: searched && !isLoading && !isFetching && Array.isArray(data) && data.length === 0,
+    enabled:
+      searched &&
+      !isLoading &&
+      !isFetching &&
+      extractFlightOffers(data).length === 0,
   });
 
   const handleSearch = (form) => {
@@ -56,7 +61,8 @@ export default function FlightSearchPage() {
     setSearchParams(params);
   };
 
-  const offers = Array.isArray(data) ? data : data?.offers ?? [];
+  const offers = extractFlightOffers(data);
+  const suggestionOffers = extractFlightSuggestions(suggestions);
 
   return (
     <>
@@ -103,11 +109,11 @@ export default function FlightSearchPage() {
                   title="No flights found"
                   description="Try different dates or routes."
                 />
-                {suggestions?.length > 0 && (
+                {suggestionOffers.length > 0 && (
                   <div className="mt-6">
                     <h3 className="text-sm font-medium text-slate-700 mb-3">Suggested alternatives</h3>
                     <div className="space-y-4">
-                      {suggestions.map((offer) => (
+                      {suggestionOffers.map((offer) => (
                         <FlightCard
                           key={offer.id}
                           offer={offer}

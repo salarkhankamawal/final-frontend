@@ -1,13 +1,14 @@
 import api, { unwrapResponse } from "./client";
+import { extractFlightOffers, extractFlightSuggestions } from "../utils/flights";
 
 export async function searchFlights(params) {
   const res = await api.get("/flights", { params });
-  return unwrapResponse(res);
+  return extractFlightOffers(unwrapResponse(res));
 }
 
 export async function getFlightSuggestions(params) {
   const res = await api.get("/flights/suggestions", { params });
-  return unwrapResponse(res);
+  return extractFlightSuggestions(unwrapResponse(res));
 }
 
 export async function getFlightOffer(offerId) {
@@ -17,7 +18,7 @@ export async function getFlightOffer(offerId) {
 
 export async function adminSearchFlights(params) {
   const res = await api.get("/admin/flights/search", { params });
-  return unwrapResponse(res);
+  return extractFlightOffers(unwrapResponse(res));
 }
 
 export async function adminGetFlightOffer(offerId) {

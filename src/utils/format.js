@@ -11,11 +11,18 @@ export function formatDateTime(value, pattern = "MMM d, yyyy HH:mm") {
 }
 
 export function formatTime(value) {
+  if (!value) return "—";
+  if (typeof value === "string" && /^\d{1,2}:\d{2}$/.test(value.trim())) {
+    return value.trim();
+  }
   return formatDate(value, "HH:mm");
 }
 
-export function formatDuration(minutes) {
-  if (!minutes && minutes !== 0) return "—";
+export function formatDuration(value) {
+  if (value == null || value === "") return "—";
+  if (typeof value === "string" && /h|m/.test(value)) return value;
+  const minutes = Number(value);
+  if (Number.isNaN(minutes)) return "—";
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
   if (h && m) return `${h}h ${m}m`;

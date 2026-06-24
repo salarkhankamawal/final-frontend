@@ -20,6 +20,7 @@ import { CardSkeleton } from "../../Components/shared/PageSkeleton";
 import { FlightCard } from "../../Components/shared/FlightCard";
 import { OfferExpiryBanner } from "../../Components/shared/OfferExpiryBanner";
 import { formatCurrency } from "../../utils/format";
+import { normalizeFlightOffer } from "../../utils/flights";
 
 const schema = z.object({
   phone: z.string().min(7, "Phone is required"),
@@ -65,8 +66,8 @@ export default function BookingCreatePage() {
 
   useEffect(() => {
     if (offer) {
-      const price = offer.price?.total ?? offer.totalPrice ?? offer.price ?? 0;
-      setValue("paymentAmount", Number(price) || 0);
+      const normalized = normalizeFlightOffer(offer);
+      setValue("paymentAmount", Number(normalized.price) || 0);
     }
   }, [offer, setValue]);
 
@@ -118,7 +119,7 @@ export default function BookingCreatePage() {
     });
   };
 
-  const price = offer?.price?.total ?? offer?.totalPrice ?? offer?.price;
+  const normalizedOffer = offer ? normalizeFlightOffer(offer) : null;
 
   return (
     <>
@@ -143,7 +144,7 @@ export default function BookingCreatePage() {
           <OfferExpiryBanner startedAt={Date.now()} />
           <FlightCard offer={offer} showSelect={false} />
           <p className="text-sm text-slate-500">
-            Offer price: {formatCurrency(price, offer.price?.currency ?? offer.currency)}
+            Offer price: {formatCurrency(normalizedOffer?.price, normalizedOffer?.currency)}
           </p>
         </div>
       )}

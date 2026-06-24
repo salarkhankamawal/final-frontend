@@ -9,6 +9,7 @@ import { OfferExpiryBanner } from "../../Components/shared/OfferExpiryBanner";
 import { ApiErrorAlert } from "../../Components/shared/ApiErrorAlert";
 import { CardSkeleton } from "../../Components/shared/PageSkeleton";
 import { Button } from "../../Components/ui/Button";
+import { normalizeFlightOffer } from "../../utils/flights";
 import { formatCurrency, formatDuration, formatStops } from "../../utils/format";
 import { Phone, LogIn } from "lucide-react";
 
@@ -22,15 +23,16 @@ export default function FlightOfferPage() {
     enabled: Boolean(offerId),
   });
 
-  const segments = offer?.segments || offer?.itineraries?.[0]?.segments || [];
-  const price = offer?.price?.total ?? offer?.totalPrice ?? offer?.price;
-  const currency = offer?.price?.currency ?? offer?.currency ?? "USD";
-  const stops = offer?.stops ?? Math.max(0, segments.length - 1);
+  const flight = offer ? normalizeFlightOffer(offer) : null;
 
   return (
     <>
       <MetaTags
-        title={offer ? `${offer.origin || segments[0]?.departureAirport} to ${offer.destination || segments.at(-1)?.arrivalAirport}` : "Flight Details"}
+        title={
+          flight
+            ? `${flight.origin} to ${flight.destination}`
+            : "Flight Details"
+        }
         description="View flight offer details and contact our agency to book."
       />
       <div className="mx-auto max-w-3xl px-4 py-8">
@@ -41,7 +43,7 @@ export default function FlightOfferPage() {
         {isLoading && <div className="mt-6"><CardSkeleton rows={5} /></div>}
         {error && <ApiErrorAlert message={getApiErrorMessage(error)} className="mt-6" />}
 
-        {offer && (
+        {flight && (
           <div className="mt-6 space-y-6">
             <OfferExpiryBanner startedAt={startedAt} />
 
@@ -49,24 +51,28 @@ export default function FlightOfferPage() {
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900">
-                    {offer.airline || offer.carrier || "Flight"} · {offer.seatClass || "Economy"}
+                    {flight.airline} · {flight.seatClass || "Economy"}
                   </h1>
                   <p className="text-sm text-slate-500 mt-1">
-                    {formatStops(stops)} · {formatDuration(offer.duration ?? offer.totalDuration)}
+                    {formatStops(flight.stops)} · {formatDuration(flight.duration)}
                   </p>
                 </div>
-                <p className="text-3xl font-bold text-sky-600">{formatCurrency(price, currency)}</p>
+                <p className="text-3xl font-bold text-sky-600">
+                  {formatCurrency(flight.price, flight.currency)}
+                </p>
               </div>
 
               <div className="mt-8">
                 <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">
                   Itinerary
                 </h2>
-                <SegmentTimeline segments={segments} />
+                <SegmentTimeline segments={flight.segments} />
               </div>
 
-              {offer.seatsAvailable != null && (
-                <p className="mt-4 text-sm text-slate-500">{offer.seatsAvailable} seats available</p>
+              {flight.seatsAvailable != null && (
+                <p className="mt-4 text-sm text-slate-500">
+                  {flight.seatsAvailable} seats available
+                </p>
               )}
             </div>
 
