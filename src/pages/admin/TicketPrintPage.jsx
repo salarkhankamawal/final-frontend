@@ -108,7 +108,7 @@ export default function TicketPrintPage() {
           )}
 
           <div className="bg-slate-50 px-6 py-3 text-xs text-slate-500 text-center border-t">
-            Present this boarding pass at check-in · SkyRoute Travel Agency
+            Present this boarding pass at check-in · Nawi Saadi Travel Agency
           </div>
         </div>
       </div>

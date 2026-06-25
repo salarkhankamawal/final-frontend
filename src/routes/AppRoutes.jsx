@@ -9,6 +9,8 @@ import LandingPage from "../pages/public/LandingPage";
 import FlightSearchPage from "../pages/public/FlightSearchPage";
 import FlightOfferPage from "../pages/public/FlightOfferPage";
 import VerifyTicketPage from "../pages/public/VerifyTicketPage";
+import AboutUs from "../pages/AboutUs";
+import ContactUs from "../pages/ContactUs";
 
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
@@ -27,6 +29,8 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<PublicLayout />}>
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/flights" element={<FlightSearchPage />} />
         <Route path="/flights/:offerId" element={<FlightOfferPage />} />

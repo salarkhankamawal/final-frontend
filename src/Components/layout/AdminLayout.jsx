@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/Button";
+import whitelogo from "../../assets/logowhite.png";
 
 const sidebarLinks = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -42,7 +43,7 @@ export default function AdminLayout() {
       >
         <div className="flex items-center justify-between p-5 border-b border-slate-800">
           <Link to="/admin" className="font-bold text-lg">
-            SkyRoute Admin
+            <img src={whitelogo} alt="Nawi Saadi Travel Agency" /> Admin
           </Link>
           <button type="button" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="w-5 h-5" />

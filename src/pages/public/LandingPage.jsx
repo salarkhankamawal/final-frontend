@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Plane, Search, Ticket, Shield } from "lucide-react";
+import heroimg from "../../assets/heroimg.jpg";
 import { MetaTags } from "../../Components/shared/MetaTags";
 import { Button } from "../../Components/ui/Button";
 import { FlightSearchForm } from "../../Components/shared/FlightSearchForm";
@@ -16,9 +17,18 @@ export default function LandingPage() {
     <>
       <MetaTags
         title="Book Your Next Journey"
-        description="Search flights, compare prices, and verify tickets with SkyRoute Travel Agency."
+        description="Search flights, compare prices, and verify tickets with Nawi Saadi Travel Agency."
       />
-      <section className="relative overflow-hidden bg-gradient-to-br from-sky-600 via-sky-700 to-indigo-800 text-white">
+      <section
+        className="relative overflow-hidden text-white"
+        style={{
+          backgroundImage: `url(${heroimg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="absolute inset-0 bg-sky-900/50" />
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-sky-300 rounded-full blur-3xl" />
@@ -30,20 +40,20 @@ export default function LandingPage() {
               Trusted Travel Agency
             </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              Find the best flights at unbeatable prices
+              Find the best flights at unbeatable prices with Nawi Saadi
             </h1>
             <p className="mt-4 text-lg text-sky-100">
               Search routes across KBL, DXB, IST, DOH and more. Verify your ticket anytime.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/flights">
-                <Button size="lg" className="bg-white text-sky-700 hover:bg-sky-50">
+                <Button size="lg" className=" text-sky-700 hover:bg-white/10 cursor-pointer" >
                   <Search className="w-5 h-5" />
                   Search Flights
                 </Button>
               </Link>
               <Link to="/verify-ticket">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg"  className="cursor-pointer hover:bg-white/10">
                   <Ticket className="w-5 h-5" />
                   Verify Ticket
                 </Button>

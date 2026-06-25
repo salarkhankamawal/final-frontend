@@ -3,8 +3,12 @@ import { Plane, Ticket, LogIn, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/Button";
+import logo from "../../assets/logo.png";
 
 const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About Us" },
+  { to: "/contact", label: "Contact Us" },
   { to: "/flights", label: "Flights" },
   { to: "/verify-ticket", label: "Verify Ticket" },
 ];
@@ -18,8 +22,8 @@ export default function PublicLayout() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <Link to="/" className="flex items-center gap-2 font-bold text-slate-900">
-            <Plane className="w-6 h-6 text-sky-600" />
-            SkyRoute Travel
+            <img src={logo} alt="Logo" className="" />
+            
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
@@ -86,7 +90,7 @@ export default function PublicLayout() {
         <div className="mx-auto max-w-6xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
           <div className="flex items-center gap-2">
             <Ticket className="w-4 h-4" />
-            <span>© {new Date().getFullYear()} SkyRoute Travel Agency</span>
+            <span>© {new Date().getFullYear()} Nawi Saadi Travel Agency</span>
           </div>
           <div className="flex gap-4">
             <Link to="/flights" className="hover:text-slate-700">

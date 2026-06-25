@@ -54,7 +54,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <MetaTags title="Agent Login" description="Sign in to the SkyRoute travel agency admin portal." />
+      <MetaTags title="Agent Login" description="Sign in to the Nawi Saadi travel agency admin portal." />
       <div className="rounded-2xl bg-white p-8 shadow-xl">
         <h1 className="text-2xl font-bold text-slate-900">Agent Login</h1>
         <p className="mt-1 text-sm text-slate-500">Access the booking management dashboard</p>
