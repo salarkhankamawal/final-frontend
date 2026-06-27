@@ -69,7 +69,7 @@ export default function LandingPage() {
 
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-2xl font-bold text-slate-900 text-center mb-10">Why SkyRoute?</h2>
+          <h2 className="text-2xl font-bold text-slate-900 text-center mb-10">Why Nawi Saadi?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {

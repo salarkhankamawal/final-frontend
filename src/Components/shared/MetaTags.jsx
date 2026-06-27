@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export function MetaTags({ title, description }) {
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = title ? `${title} | SkyRoute Travel` : "SkyRoute Travel Agency";
+    document.title = title ? `${title} | Nawi Saadi` : "Nawi Saadi Travel Agency";
 
     let meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute("content") ?? "";

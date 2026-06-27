@@ -63,7 +63,7 @@ export default function TicketPrintPage() {
           <div className="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
             <div>
               <p className="text-xs uppercase tracking-widest opacity-70">Boarding Pass</p>
-              <p className="text-xl font-bold">{ticket.airline || "SkyRoute Travel"}</p>
+              <p className="text-xl font-bold">{ticket.airline || "Nawi Saadi"}</p>
             </div>
             <div className="text-right">
               <p className="text-2xl font-mono font-bold">{ticket.ticketNumber}</p>

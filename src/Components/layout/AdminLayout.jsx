@@ -37,7 +37,7 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-slate-100 flex">
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transform transition-transform lg:translate-x-0 lg:static ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transform transition-transform lg:sticky lg:top-0 lg:h-screen lg:self-start lg:translate-x-0 lg:overflow-y-auto ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -70,10 +70,10 @@ export default function AdminLayout() {
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800">
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800"
+            className=" w-full justify-start text-white cursor-pointer hover:text-white hover:bg-slate-800"
             onClick={handleLogout}
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut className="w-4 h-4 " />
             Log out
           </Button>
         </div>

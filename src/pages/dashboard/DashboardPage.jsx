@@ -48,14 +48,14 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <AppLayout title="Dashboard" subtitle="Overview of your work">
+      <AppLayout title="Nawi Saadi tourism" subtitle="Overview of your work">
         <Spinner className="py-20" />
       </AppLayout>
     );
   }
 
   return (
-    <AppLayout title="Dashboard" subtitle="Overview of your work">
+    <AppLayout title="Nawi Saadi tourism" subtitle="Overview of your work">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         <StatCard
           label="My projects"

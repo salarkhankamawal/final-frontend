@@ -48,10 +48,10 @@ export default function RegisterPage() {
 
   return (
     <>
-      <MetaTags title="Agent Register" description="Register as a travel agent on SkyRoute." />
+      <MetaTags title="Agent Register" description="Register as a travel agent on Nawi Saadi." />
       <div className="rounded-2xl bg-white p-8 shadow-xl">
         <h1 className="text-2xl font-bold text-slate-900">Create Agent Account</h1>
-        <p className="mt-1 text-sm text-slate-500">Join the SkyRoute booking platform</p>
+        <p className="mt-1 text-sm text-slate-500">Join the Nawi Saadi booking platform</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <ApiErrorAlert message={errors.root?.message} />
