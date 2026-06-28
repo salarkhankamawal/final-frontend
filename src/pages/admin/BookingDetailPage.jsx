@@ -173,6 +173,22 @@ export default function BookingDetailPage() {
                   <dd>{bookingStatus}</dd>
                 </div>
                 <div className="flex justify-between">
+                  <dt className="text-slate-500">Departure</dt>
+                  <dd>
+                    {booking.flight?.departureDate || booking.flightSnapshot?.departureDate
+                      ? `${booking.flight?.originCity || booking.flightSnapshot?.originAirportCode || "Departure"}${booking.flight?.originCountry || booking.flightSnapshot?.originCountry ? `, ${booking.flight?.originCountry || booking.flightSnapshot?.originCountry}` : ""} · ${formatDateTime(booking.flight?.departureDate || booking.flightSnapshot?.departureDate)}${booking.flight?.departureTime || booking.flightSnapshot?.departureTime ? ` · ${booking.flight?.departureTime || booking.flightSnapshot?.departureTime}` : ""}`
+                      : "—"}
+                  </dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-slate-500">Arrival</dt>
+                  <dd>
+                    {booking.flight?.arrivalDate || booking.flightSnapshot?.arrivalDate
+                      ? `${booking.flight?.destinationCity || booking.flightSnapshot?.destinationAirportCode || "Arrival"}${booking.flight?.destinationCountry || booking.flightSnapshot?.destinationCountry ? `, ${booking.flight?.destinationCountry || booking.flightSnapshot?.destinationCountry}` : ""} · ${formatDateTime(booking.flight?.arrivalDate || booking.flightSnapshot?.arrivalDate)}${booking.flight?.arrivalTime || booking.flightSnapshot?.arrivalTime ? ` · ${booking.flight?.arrivalTime || booking.flightSnapshot?.arrivalTime}` : ""}`
+                      : "—"}
+                  </dd>
+                </div>
+                <div className="flex justify-between">
                   <dt className="text-slate-500">Created</dt>
                   <dd>{formatDateTime(booking.createdAt || booking.created)}</dd>
                 </div>

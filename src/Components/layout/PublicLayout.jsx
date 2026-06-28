@@ -39,7 +39,7 @@ export default function PublicLayout() {
             ))}
             {isAuthenticated ? (
               <Link to="/admin">
-                <Button size="sm" variant="primary">
+                <Button size="sm" variant="primary" className="cursor-pointer">
                   Admin Dashboard
                 </Button>
               </Link>
