@@ -105,7 +105,7 @@ export default function VerifyTicketPage() {
           <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold text-slate-900">Booking {booking.bookingReference || booking.reference}</h2>
-              <StatusBadge status={booking.status} />
+              <StatusBadge status={booking.status || booking.bookingStatus} />
             </div>
 
             {isPending && (
@@ -114,40 +114,77 @@ export default function VerifyTicketPage() {
               </div>
             )}
 
-            {booking.status === "Confirmed" && ticket && (
-              <>
-                <div className="grid sm:grid-cols-2 gap-4 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-slate-500">Passenger</p>
+                <p className="font-medium">{booking.passenger?.name || booking.customer?.name || ticket?.passengerName || "—"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500">Phone</p>
+                <p className="font-medium">{booking.phone || booking.customer?.phone || ticket?.phone || "—"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500">Passport</p>
+                <p className="font-medium">{booking.passenger?.passportNumber || booking.customer?.passportNumber || "—"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500">Booking created</p>
+                <p className="font-medium">{formatDate(booking.createdAt || booking.created)}</p>
+              </div>
+
+              <div>
+                <p className="text-slate-500">Flight</p>
+                <p className="font-medium">{booking.flightName || booking.flight?.flightNumber || booking.flightSnapshot?.flightNumber || "—"}</p>
+              </div>
+              <div>
+                <p className="text-slate-500">Route</p>
+                <p className="font-medium">{booking.flightDetails || booking.route || booking.flightSnapshot ? `${booking.flightSnapshot?.originAirportCode || booking.flight?.originAirportCode || ""} → ${booking.flightSnapshot?.destinationAirportCode || booking.flight?.destinationAirportCode || ""}` : "—"}</p>
+              </div>
+
+              <div>
+                <p className="text-slate-500">Departure</p>
+                <p className="font-medium">
+                  {(booking.flight?.departureDate || booking.flightSnapshot?.departureDate)
+                    ? `${booking.flight?.originCity || booking.flightSnapshot?.originCity || booking.flight?.originAirportCode || booking.flightSnapshot?.originAirportCode || "Departure"}${booking.flight?.originCountry || booking.flightSnapshot?.originCountry ? `, ${booking.flight?.originCountry || booking.flightSnapshot?.originCountry}` : ""} · ${formatDate(booking.flight?.departureDate || booking.flightSnapshot?.departureDate)}${booking.flight?.departureTime || booking.flightSnapshot?.departureTime ? ` · ${booking.flight?.departureTime || booking.flightSnapshot?.departureTime}` : ""}`
+                    : "—"}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-500">Arrival</p>
+                <p className="font-medium">
+                  {(booking.flight?.arrivalDate || booking.flightSnapshot?.arrivalDate)
+                    ? `${booking.flight?.destinationCity || booking.flightSnapshot?.destinationCity || booking.flight?.destinationAirportCode || booking.flightSnapshot?.destinationAirportCode || "Arrival"}${booking.flight?.destinationCountry || booking.flightSnapshot?.destinationCountry ? `, ${booking.flight?.destinationCountry || booking.flightSnapshot?.destinationCountry}` : ""} · ${formatDate(booking.flight?.arrivalDate || booking.flightSnapshot?.arrivalDate)}${booking.flight?.arrivalTime || booking.flightSnapshot?.arrivalTime ? ` · ${booking.flight?.arrivalTime || booking.flightSnapshot?.arrivalTime}` : ""}`
+                    : "—"}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-slate-500">Amount</p>
+                <p className="font-medium">{formatCurrency(booking.amount ?? booking.grandTotal ?? booking.totalFare ?? booking.paymentInfo?.amount ?? 0, booking.currency)}</p>
+              </div>
+              <div>
+                <p className="text-slate-500">Status</p>
+                <p className="font-medium">{booking.status || booking.bookingStatus || "—"}</p>
+              </div>
+
+              {ticket && (
+                <>
                   <div>
                     <p className="text-slate-500">Ticket number</p>
                     <p className="font-medium">{ticket.ticketNumber}</p>
                   </div>
                   <div>
                     <p className="text-slate-500">Seat</p>
-                    <p className="font-medium">{ticket.seat || "—"}</p>
+                    <p className="font-medium">{ticket.seat || ticket.seatNumber || "—"}</p>
                   </div>
-                  <div>
-                    <p className="text-slate-500">Passenger</p>
-                    <p className="font-medium">{booking.passenger?.name || ticket.passengerName}</p>
-                  </div>
-                  <div>
-                    <p className="text-slate-500">Departure</p>
-                    <p className="font-medium">{formatDate(booking.departureDate || ticket.departureDate)}</p>
-                  </div>
-                  {booking.totalAmount != null && (
-                    <div>
-                      <p className="text-slate-500">Amount</p>
-                      <p className="font-medium">{formatCurrency(booking.totalAmount, booking.currency)}</p>
-                    </div>
-                  )}
-                </div>
-                {(ticket.segments || booking.flight?.segments) && (
-                  <SegmentTimeline segments={ticket.segments || booking.flight?.segments} />
-                )}
-              </>
-            )}
+                </>
+              )}
+            </div>
 
-            {booking.status === "Cancelled" && (
-              <p className="text-sm text-red-700">This booking has been cancelled.</p>
+            {(ticket?.segments || booking.flight?.segments || booking.segments) && (
+              <div>
+                <SegmentTimeline segments={ticket?.segments || booking.flight?.segments || booking.segments} />
+              </div>
             )}
           </div>
         )}
