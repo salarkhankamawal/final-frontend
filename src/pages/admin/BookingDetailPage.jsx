@@ -129,24 +129,21 @@ export default function BookingDetailPage() {
           </div>
 
           {(confirmResult || ticket) && (
-            <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-4 text-sm">
-              <p className="font-medium text-emerald-900">Ticket issued</p>
-              <p className="mt-1 text-emerald-800">
-                Ticket #: {(confirmResult?.ticket || ticket)?.ticketNumber}
-                {(confirmResult?.ticket || ticket)?.seat && ` · Seat ${(confirmResult?.ticket || ticket).seat}`}
-              </p>
-              {confirmResult?.emailSent != null && (
-                <p className="mt-1 text-emerald-700">
-                  Email {confirmResult.emailSent ? "sent" : "not sent"} to passenger
-                </p>
-              )}
-              {ticketId && (
-                <Link to={`/admin/tickets/${ticketId}`} className="text-sky-600 underline mt-2 inline-block">
-                  View ticket details
-                </Link>
-              )}
-            </div>
-          )}
+  <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-4 text-sm">
+    <p className="font-medium text-emerald-900">Ticket issued</p>
+    <p className="mt-1 text-emerald-800">
+      Ticket #: {(confirmResult?.ticket || ticket)?.ticketNumber}
+      {(confirmResult?.ticket || ticket)?.seat && ` · Seat ${(confirmResult?.ticket || ticket).seat}`}
+    </p>
+    {confirmResult?.email && (
+      <p className="mt-1 text-emerald-700">
+        {confirmResult.email.sent
+          ? `Email sent to ${confirmResult.email.to || booking.customer?.email || booking.passenger?.email}`
+          : `Email not sent${confirmResult.email.reason ? `: ${confirmResult.email.reason}` : ""}`}
+      </p>
+    )}
+  </div>
+)}
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-slate-200 bg-white p-6">
@@ -278,5 +275,5 @@ export default function BookingDetailPage() {
         </div>
       )}
     </>
-  );
+  )
 }

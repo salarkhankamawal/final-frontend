@@ -749,9 +749,14 @@ function BookingsView({ bookings, setBookings, flights, showToast, onViewTicket 
     }
 
     try {
-      await bookingsApi.confirmBooking(bookingId);
+      const result = await bookingsApi.confirmBooking(bookingId);
       setBookings((prev) => prev.map((x) => (String(x.id || x._id) === String(bookingId) ? { ...x, status: "Confirmed" } : x)));
-      showToast(`Booking ${b.pnr || b.bookingReference || bookingId} confirmed`);
+      const emailMessage = result?.email
+        ? result.email.sent
+          ? `Email sent to ${result.email.to || b.email || "customer"}`
+          : `Email not sent${result.email.reason ? `: ${result.email.reason}` : ""}`
+        : "";
+      showToast(`Booking ${b.pnr || b.bookingReference || bookingId} confirmed${emailMessage ? `. ${emailMessage}` : ""}`);
     } catch (error) {
       showToast(error?.message || "Could not confirm booking right now.");
     }

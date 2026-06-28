@@ -38,7 +38,7 @@ export async function createBooking(payload) {
 
 export async function confirmBooking(id) {
   const res = await api.patch(`/admin/bookings/${id}/confirm`);
-  return normalizeBookingResponse(unwrapResponse(res));
+  return unwrapResponse(res);
 }
 
 export async function cancelBooking(id, body = {}) {
