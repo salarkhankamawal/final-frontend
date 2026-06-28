@@ -63,9 +63,10 @@ export default function BookingDetailPage() {
     onError: (err) => toast.error(getApiErrorMessage(err)),
   });
 
-  const isPending = booking?.status === "Pending";
-  const isConfirmed = booking?.status === "Confirmed";
-  const isCancelled = booking?.status === "Cancelled";
+  const bookingStatus = booking?.status || booking?.bookingStatus;
+  const isPending = bookingStatus === "Pending";
+  const isConfirmed = bookingStatus === "Confirmed";
+  const isCancelled = bookingStatus === "Cancelled";
   const ticket = booking?.ticket ?? confirmResult?.ticket;
   const ticketId = ticket?._id || ticket?.id;
 
@@ -88,7 +89,7 @@ export default function BookingDetailPage() {
               </h1>
               <p className="text-slate-500 mt-1">Created {formatDateTime(booking.createdAt)}</p>
             </div>
-            <StatusBadge status={booking.status} />
+            <StatusBadge status={bookingStatus} />
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -149,23 +150,31 @@ export default function BookingDetailPage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-slate-200 bg-white p-6">
-              <h2 className="font-semibold text-slate-900 mb-4">Passenger</h2>
+              <h2 className="font-semibold text-slate-900 mb-4">Booking details</h2>
               <dl className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Name</dt>
-                  <dd>{booking.passenger?.name}</dd>
+                  <dt className="text-slate-500">Flight</dt>
+                  <dd>{booking.flightName || booking.flight?.flightNumber || "—"}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Email</dt>
-                  <dd>{booking.passenger?.email}</dd>
+                  <dt className="text-slate-500">Route</dt>
+                  <dd>{booking.flightDetails || booking.route || "—"}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-slate-500">Passenger</dt>
+                  <dd>{booking.passenger?.name || "—"}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt className="text-slate-500">Phone</dt>
-                  <dd>{booking.phone}</dd>
+                  <dd>{booking.phone || booking.customer?.phone || "—"}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <dt className="text-slate-500">Passport</dt>
-                  <dd>{booking.passenger?.passportNumber}</dd>
+                  <dt className="text-slate-500">Status</dt>
+                  <dd>{bookingStatus}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-slate-500">Created</dt>
+                  <dd>{formatDateTime(booking.createdAt || booking.created)}</dd>
                 </div>
               </dl>
             </div>
@@ -175,11 +184,11 @@ export default function BookingDetailPage() {
               <dl className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <dt className="text-slate-500">Method</dt>
-                  <dd>{booking.paymentInfo?.method}</dd>
+                  <dd>{booking.paymentInfo?.method || booking.paymentStatus}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt className="text-slate-500">Amount</dt>
-                  <dd>{formatCurrency(booking.paymentInfo?.amount, booking.currency)}</dd>
+                  <dd>{formatCurrency(booking.amount ?? booking.paymentInfo?.amount ?? 0, booking.currency)}</dd>
                 </div>
                 {booking.discount > 0 && (
                   <div className="flex justify-between">

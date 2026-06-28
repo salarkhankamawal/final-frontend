@@ -51,19 +51,51 @@ export default function TicketDetailPage() {
           <div className="rounded-xl border border-slate-200 bg-white p-6 grid sm:grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-slate-500">Passenger</p>
-              <p className="font-medium">{ticket.passengerName || ticket.passenger?.name}</p>
+              <p className="font-medium">{ticket.passengerName || ticket.passenger?.name || "—"}</p>
             </div>
             <div>
-              <p className="text-slate-500">Seat</p>
-              <p className="font-medium">{ticket.seat || "—"}</p>
+              <p className="text-slate-500">Phone</p>
+              <p className="font-medium">{ticket.phone || ticket.booking?.phone || "—"}</p>
             </div>
             <div>
-              <p className="text-slate-500">Booking reference</p>
-              <p className="font-medium">{ticket.bookingReference}</p>
+              <p className="text-slate-500">Flight</p>
+              <p className="font-medium">{ticket.flightName || ticket.flight?.flightNumber || "—"}</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Route</p>
+              <p className="font-medium">{ticket.flightDetails || ticket.route || "—"}</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Status</p>
+              <p className="font-medium">{ticket.status || ticket.ticketStatus || "—"}</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Amount</p>
+              <p className="font-medium">{ticket.amount ? `${ticket.currency || "USD"} ${ticket.amount}` : "—"}</p>
             </div>
             <div>
               <p className="text-slate-500">Departure</p>
-              <p className="font-medium">{formatDate(ticket.departureDate)}</p>
+              <p className="font-medium">
+                {ticket.flight?.departureDate
+                  ? `${ticket.flight.originCity || ticket.flight.originAirportCode || "Departure"}${ticket.flight.originCountry ? `, ${ticket.flight.originCountry}` : ""} · ${formatDateTime(ticket.flight.departureDate)}${ticket.flight.departureTime ? ` · ${ticket.flight.departureTime}` : ""}`
+                  : "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-slate-500">Arrival</p>
+              <p className="font-medium">
+                {ticket.flight?.arrivalDate
+                  ? `${ticket.flight.destinationCity || ticket.flight.destinationAirportCode || "Arrival"}${ticket.flight.destinationCountry ? `, ${ticket.flight.destinationCountry}` : ""} · ${formatDateTime(ticket.flight.arrivalDate)}${ticket.flight.arrivalTime ? ` · ${ticket.flight.arrivalTime}` : ""}`
+                  : "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-slate-500">Booking reference</p>
+              <p className="font-medium">{ticket.bookingReference || ticket.booking?.bookingReference || "—"}</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Created</p>
+              <p className="font-medium">{formatDate(ticket.createdAt || ticket.created)}</p>
             </div>
           </div>
 

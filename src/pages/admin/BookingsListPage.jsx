@@ -80,6 +80,7 @@ export default function BookingsListPage() {
               <thead className="bg-slate-50 text-slate-600">
                 <tr>
                   <th className="text-left px-4 py-3 font-medium">Reference</th>
+                  <th className="text-left px-4 py-3 font-medium">Flight</th>
                   <th className="text-left px-4 py-3 font-medium">Passenger</th>
                   <th className="text-left px-4 py-3 font-medium">Phone</th>
                   <th className="text-left px-4 py-3 font-medium">Status</th>
@@ -98,15 +99,19 @@ export default function BookingsListPage() {
                         {b.bookingReference || b.reference}
                       </Link>
                     </td>
+                    <td className="px-4 py-3">
+                      <div className="font-medium text-slate-900">{b.flightName || b.flight?.flightNumber || "—"}</div>
+                      <div className="text-xs text-slate-500">{b.flightDetails || b.route || "—"}</div>
+                    </td>
                     <td className="px-4 py-3">{b.passenger?.name || "—"}</td>
                     <td className="px-4 py-3">{b.phone || b.customer?.phone || "—"}</td>
                     <td className="px-4 py-3">
                       <StatusBadge status={b.status} />
                     </td>
                     <td className="px-4 py-3">
-                      {formatCurrency(b.totalAmount ?? b.paymentInfo?.amount, b.currency)}
+                      {formatCurrency(b.amount ?? b.totalAmount ?? b.paymentInfo?.amount ?? 0, b.currency)}
                     </td>
-                    <td className="px-4 py-3 text-slate-500">{formatDate(b.createdAt)}</td>
+                    <td className="px-4 py-3 text-slate-500">{formatDate(b.createdAt || b.created)}</td>
                   </tr>
                 ))}
               </tbody>

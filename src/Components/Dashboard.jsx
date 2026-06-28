@@ -5,6 +5,7 @@ import {
   Printer, Send, CalendarClock, ArrowUpDown,
   Eye, Menu, ShieldCheck, ShieldOff,
 } from "lucide-react";
+import * as bookingsApi from "../api/bookings.api";
 
 /* ============================================================
    MOCK DATA
@@ -740,9 +741,20 @@ function BookingsView({ bookings, setBookings, flights, showToast, onViewTicket 
     });
   }, [bookings, query, statusFilter]);
 
-  function confirmBooking(b) {
-    setBookings((prev) => prev.map((x) => (x.id === b.id ? { ...x, status: "Confirmed" } : x)));
-    showToast(`Booking ${b.pnr} confirmed`);
+  async function confirmBooking(b) {
+    const bookingId = b.id || b._id;
+    if (!bookingId) {
+      showToast("Booking could not be confirmed because its ID is missing.");
+      return;
+    }
+
+    try {
+      await bookingsApi.confirmBooking(bookingId);
+      setBookings((prev) => prev.map((x) => (String(x.id || x._id) === String(bookingId) ? { ...x, status: "Confirmed" } : x)));
+      showToast(`Booking ${b.pnr || b.bookingReference || bookingId} confirmed`);
+    } catch (error) {
+      showToast(error?.message || "Could not confirm booking right now.");
+    }
   }
   function cancelBooking() {
     setBookings((prev) => prev.map((x) => (x.id === cancelling.id ? { ...x, status: "Cancelled" } : x)));

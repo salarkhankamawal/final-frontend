@@ -157,7 +157,7 @@ function FlightSearchForm({
       </div>
 
       {/* Search Button */}
-      <button className="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-500 text-white rounded-2xl font-bold">
+      <button className="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-500 text-white rounded-2xl font-bold cursor-pointer">
         Search Flights
       </button>
     </div>

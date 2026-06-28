@@ -92,7 +92,7 @@ export function FlightSearchForm({ defaultValues = {}, onSearch, loading = false
           />
         )}
       </div>
-      <Button type="submit" variant="primary" className="mt-6 w-full sm:w-auto" loading={loading}>
+      <Button type="submit" variant="primary" className="mt-6 w-full sm:w-auto cursor-pointer" loading={loading}>
         Search Flights
       </Button>
     </form>
