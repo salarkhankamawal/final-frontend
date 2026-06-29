@@ -40,12 +40,15 @@ export default function TicketDetailPage() {
               <h1 className="text-2xl font-bold text-slate-900">Ticket {ticket.ticketNumber}</h1>
               <p className="text-slate-500 mt-1">Issued {formatDateTime(ticket.issuedAt || ticket.createdAt)}</p>
             </div>
-            <Link to={`/admin/tickets/${id}/print`}>
-              <Button variant="primary">
-                <Printer className="w-4 h-4" />
-                Print
-              </Button>
-            </Link>
+            <button
+            type="button"
+            onClick={() => window.open(`/admin/tickets/${id}/print`, "_blank", "noopener,noreferrer")}
+          >
+            <Button variant="primary">
+              <Printer className="w-4 h-4" />
+              Print
+            </Button>
+          </button>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-6 grid sm:grid-cols-2 gap-4 text-sm">

@@ -119,12 +119,15 @@ export default function BookingDetailPage() {
               Reschedule
             </Button>
             {ticketId && (
-              <Link to={`/admin/tickets/${ticketId}/print`}>
+              <button
+                type="button"
+                onClick={() => window.open(`/admin/tickets/${ticketId}/print`, "_blank", "noopener,noreferrer")}
+              >
                 <Button variant="outline">
                   <Printer className="w-4 h-4" />
                   Print ticket
                 </Button>
-              </Link>
+              </button>
             )}
           </div>
 
